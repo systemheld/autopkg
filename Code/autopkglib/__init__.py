@@ -412,6 +412,13 @@ class AutoPackager(object):
             variables.update(set(step.get("Arguments", dict()).keys()))
             # Make sure all required input variables exist.
             for key, flags in processor_class.input_variables.items():
+                if key not in variables:
+                    # try to get any missing input variables from 
+                    # preferences/defaults
+                    pref_value = CFPreferencesCopyAppValue(key, BUNDLE_ID)
+                    if pref_value:
+                        self.env[key] = pref_value
+                        variables.add(key)
                 if flags["required"] and (key not in variables):
                     raise AutoPackagerError("%s requires missing argument %s"
                                             % (step["Processor"], key))
