@@ -81,7 +81,11 @@ class AppPkgCreator(DmgMounter, PkgCreator):
         },
         "app_pkg_creator_summary_result": {
             "description": "Description of interesting results."
-        }
+        },
+        "pkg_path": {
+            "description":
+                "The pathname to the pkg created."
+        },
     }
 
     def read_info_plist(self, app_path):
